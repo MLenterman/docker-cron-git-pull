@@ -1,7 +1,7 @@
 services:
   gitpull:
     build: .
-    image: mlenterman/docker-cron-git-pull
+    image: ghcr.io/mlenterman/docker-cron-git-pull
     environment:
       CRON: "*/5 * * * *"
     volumes:
