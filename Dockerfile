@@ -1,14 +1,12 @@
-FROM ubuntu:25.10
+FROM alpine:3.22.0
+
 ENV CRON="*/5 * * * *"
 
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends git cron \
-    && rm -rf /var/lib/apt/lists/*
+RUN apk update && apk add git
 
 WORKDIR /git
-COPY gitpull.sh /usr/bin
-COPY cronjob /etc/cron.d/cronjob
+COPY --chmod=+x gitpull.sh /usr/bin
+COPY --chmod=+x entrypoint.sh /entrypoint.sh
 
-RUN touch /var/log/cron.log
-
-CMD crontab /etc/cron.d/cronjob && cron && tail -f /var/log/cron.log
+CMD ["crond", "-f", "-l", "2"]
+ENTRYPOINT [ "/entrypoint.sh" ]

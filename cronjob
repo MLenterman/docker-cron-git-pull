@@ -1,1 +1,0 @@
-${CRON} root /usr/bin/gitpull.sh >> /var/log/cron.log 2>&1
